@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>إلى Sally ❤️</title>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0; min-height:100vh; overflow:hidden;
+  font-family:Tahoma,Arial,sans-serif;
+  background:radial-gradient(circle at top,#35152b 0%,#160b18 45%,#090609 100%);
+  color:#fff; display:flex; align-items:center; justify-content:center;
+}
+.card{
+  width:min(92%,650px); min-height:500px; padding:42px 28px;
+  border:1px solid rgba(255,255,255,.14); border-radius:28px;
+  background:rgba(255,255,255,.07); backdrop-filter:blur(15px);
+  box-shadow:0 20px 80px rgba(0,0,0,.45);
+  text-align:center; position:relative; z-index:2;
+}
+.heart{font-size:55px; animation:pulse 1.5s infinite}
+h1{font-size:clamp(30px,8vw,55px); margin:12px 0}
+h2{font-size:24px; font-weight:400}
+p{
+  font-size:clamp(18px,4.5vw,24px); line-height:2;
+  min-height:150px; margin:28px auto; max-width:560px;
+}
+button{
+  border:0; border-radius:999px; padding:14px 30px;
+  font-size:18px; cursor:pointer; color:white;
+  background:linear-gradient(135deg,#ff4f91,#c52d70);
+  box-shadow:0 8px 25px rgba(255,60,130,.25);
+  transition:.25s;
+}
+button:hover{transform:translateY(-2px) scale(1.03)}
+.small{opacity:.65;font-size:13px;margin-top:25px}
+.floating{position:fixed; inset:0; pointer-events:none; overflow:hidden}
+.floating span{
+  position:absolute; bottom:-40px; opacity:.55;
+  animation:rise linear infinite;
+}
+@keyframes rise{to{transform:translateY(-115vh) rotate(360deg);opacity:0}}
+@keyframes pulse{50%{transform:scale(1.12)}}
+.fade{animation:fade .55s ease}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="floating" id="floating"></div>
+
+<main class="card">
+  <div class="heart">❤️</div>
+  <h1 id="title">Sally</h1>
+  <h2 id="subtitle">عندي حاجة صغيرة عايز أقولها لك...</h2>
+  <p id="message">قبل ما نبدأ، أوعديني تكملي للآخر ❤️</p>
+  <button id="next">كمّلي ❤️</button>
+  <div class="small">من Walid، للشخص اللي وجوده بيفرق.</div>
+</main>
+
+<script>
+const pages = [
+  {
+    title:"Sally ❤️",
+    subtitle:"يمكن الكلام ده بسيط...",
+    text:"بس كل كلمة فيه طالعة من قلبي. يمكن مش دايمًا بعرف أقول اللي جوايا، فقلت أكتبهولك بالطريقة اللي أعرفها."
+  },
+  {
+    title:"عارفة إيه؟",
+    subtitle:"إنتِ بقيتي جزء من يومي.",
+    text:"بقيت أستنى كلامك، وأفرح بوجودك، وأحس إن اليوم ناقص حاجة لما مش بتكوني فيه."
+  },
+  {
+    title:"بحب تفاصيلك ❤️",
+    subtitle:"مش بس الحاجات الكبيرة.",
+    text:"ضحكتك، طريقتك في الكلام، اهتمامك، وحتى التفاصيل الصغيرة اللي إنتِ ممكن تشوفيها عادية... أنا بشوفها حاجات مميزة فيكي."
+  },
+  {
+    title:"ولو سألتيني ليه إنتِ؟",
+    subtitle:"مش هعرف أديكي إجابة قصيرة.",
+    text:"لأنك ببساطة إنتِ. ومع الوقت اكتشفت إن وجودك في حياتي مش حاجة عايز أخسرها."
+  },
+  {
+    title:"Sally...",
+    subtitle:"عندي أمنية واحدة ❤️",
+    text:"إن الأيام اللي جاية تفضل شايلة لنا لحظات حلوة كتير، ونفضل نضحك ونتكلم ونكون موجودين في حياة بعض."
+  },
+  {
+    title:"آخر حاجة...",
+    subtitle:"اقريها براحة ❤️",
+    text:"أنا بحبك. مش عشان إنتِ كاملة، لكن عشان إنتِ Sally... بالشخصية والتفاصيل والضحكة وكل حاجة خلت ليكي مكان خاص عند Walid."
+  },
+  {
+    title:"❤️",
+    subtitle:"ولو وصلتي لهنا...",
+    text:"فدي مش مجرد رسالة على موقع. دي حاجة صغيرة مني علشان أقولك إنك غالية عندي أكتر مما الكلام يقدر يوصف."
+  }
+];
+
+let i=0;
+const title=document.getElementById("title");
+const subtitle=document.getElementById("subtitle");
+const message=document.getElementById("message");
+const next=document.getElementById("next");
+
+next.addEventListener("click",()=>{
+  i++;
+  if(i>=pages.length){
+    i=0;
+    next.textContent="اقريها تاني ❤️";
+  }
+  title.textContent=pages[i].title;
+  subtitle.textContent=pages[i].subtitle;
+  message.classList.remove("fade");
+  void message.offsetWidth;
+  message.classList.add("fade");
+  message.textContent=pages[i].text;
+});
+
+const floating=document.getElementById("floating");
+for(let j=0;j<22;j++){
+  const s=document.createElement("span");
+  s.textContent=["❤","♡","✦","♥"][j%4];
+  s.style.left=Math.random()*100+"%";
+  s.style.fontSize=(12+Math.random()*22)+"px";
+  s.style.animationDuration=(7+Math.random()*8)+"s";
+  s.style.animationDelay=(-Math.random()*12)+"s";
+  floating.appendChild(s);
+}
+</script>
+</body>
+</html>
